@@ -90,7 +90,7 @@ namespace DesafioFundamentos.Models
         }
 
         private const string PadraoMercosul = @"^[A-Z]{3}[0-9][A-Z][0-9]{2}$";
-        
+
         private bool PlacaValida(string placa)
         {
             return Regex.IsMatch(placa, PadraoMercosul);
@@ -102,8 +102,13 @@ namespace DesafioFundamentos.Models
             if (veiculos.Any())
             {
                 Console.WriteLine("Os veículos estacionados são:");
-                // TODO: Realizar um laço de repetição, exibindo os veículos estacionados
-                // *IMPLEMENTE AQUI*
+
+                foreach (string listaVeiculos in veiculos)
+                {
+                    Console.WriteLine(listaVeiculos);
+                }
+
+                Console.WriteLine($"Total de veículos na lista: {veiculos.Count}");
             }
             else
             {
