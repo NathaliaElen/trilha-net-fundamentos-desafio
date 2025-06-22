@@ -36,6 +36,13 @@ namespace DesafioFundamentos.Models
                 return;
             }
 
+            // Verifica se a placa já foi cadastrada
+            if (veiculos.Any(v => v.ToUpper() == placa))
+            {
+                Console.WriteLine("Esse veículo já foi cadastrado. Por favor, digite outro.");
+                return;
+            }
+
             // Adiciona a placa do veículo à lista
             veiculos.Add(placa);
             Console.WriteLine($"O veículo {placa} foi estacionado com sucesso!");
