@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions; // <-- ESSENCIAL PARA O REGEX FUNCIONAR
+
 namespace DesafioFundamentos.Models
 {
     public class Estacionamento
@@ -15,7 +20,7 @@ namespace DesafioFundamentos.Models
         public void AdicionarVeiculo()
         {
             Console.WriteLine("Digite a placa do veículo para estacionar:");
-            string placa = Console.ReadLine();
+            string placa = Console.ReadLine().ToUpper();
 
             // Validação simples para garantir que a placa é válida (não pode ser nula ou vazia)
             if (string.IsNullOrWhiteSpace(placa))
@@ -24,15 +29,29 @@ namespace DesafioFundamentos.Models
                 return;
             }
 
+            // Validação do formato da placa (Padrão Mercosul)
+            if (!PlacaValida(placa))
+            {
+                Console.WriteLine("Formato de placa inválido. Exemplo de formato válido: ABC1D23");
+                return;
+            }
+
             // Adiciona a placa do veículo à lista
-            veiculos.Add(placa.ToUpper());
-            Console.WriteLine($"O veículo {placa.ToUpper()} foi estacionado com sucesso!");
+            veiculos.Add(placa);
+            Console.WriteLine($"O veículo {placa} foi estacionado com sucesso!");
         }
 
         public void RemoverVeiculo()
         {
             Console.WriteLine("Digite a placa do veículo para remover:");
             string placa = Console.ReadLine().ToUpper();
+
+            // Validação do formato da placa (Padrão Mercosul)
+            if (!PlacaValida(placa))
+            {
+                Console.WriteLine("Formato de placa inválido. Exemplo de formato válido: ABC1D23");
+                return;
+            }
 
             // Verifica se o veículo existe
             if (veiculos.Any(x => x.ToUpper() == placa))
@@ -68,6 +87,13 @@ namespace DesafioFundamentos.Models
             {
                 Console.WriteLine("Desculpe, esse veículo não está estacionado aqui. Confira se digitou a placa corretamente");
             }
+        }
+
+        private const string PadraoMercosul = @"^[A-Z]{3}[0-9][A-Z][0-9]{2}$";
+        
+        private bool PlacaValida(string placa)
+        {
+            return Regex.IsMatch(placa, PadraoMercosul);
         }
 
         public void ListarVeiculos()
